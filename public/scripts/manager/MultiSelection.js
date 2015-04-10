@@ -1,0 +1,3 @@
+//>>built
+define("manager/MultiSelection",["dojo/_base/declare","manager/MultiTextField2"],function(f,g){return f("Manager.MultiSelection",[],{add:function(a){var c=manager.getElementById(this.mtfName+this.emptyField),b=manager.getElementById(this.mtfName+"_options"+a);a=c.length;for(var d=0,e=!1,b=b.options[b.selectedIndex].text,d=0;d<a;d++)c.options[d].text==b&&(e=!0);e?alert("Item j\u00c3\u00a1 est\u00c3\u00a1 na lista!"):(c.options[a]=new Option(b),c.selectedIndex=a)}})});
+//@ sourceMappingURL=MultiSelection.js.map

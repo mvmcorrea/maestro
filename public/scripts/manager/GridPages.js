@@ -1,0 +1,4 @@
+//>>built
+define("manager/GridPages",["dojo/_base/declare"],function(c){return c("Manager.GridPages",[],{templateString:dojo.cache("../../manager","templates/GridPages.html"),baseClass:"mGridPages",from:0,to:0,selected:0,grid:"",postCreate:function(){var a=[];a[0]=document.createElement("span");a[0].appendChild(document.createTextNode("P\u00e1ginas:"));a[0].className="text";this.containerNode.appendChild(a[0]);for(var b=this.from;b<=this.to;b++)a[b]=document.createElement("span"),a[b].appendChild(document.createTextNode(b)),
+a[b].className=b==this.selected?"selected":"link",this.containerNode.appendChild(a[b])},onClick:function(a){}})});
+//@ sourceMappingURL=GridPages.js.map

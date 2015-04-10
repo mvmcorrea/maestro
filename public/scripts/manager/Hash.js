@@ -1,0 +1,3 @@
+//>>built
+define("manager/Hash",["dojo/_base/declare"],function(c){return c("Manager.Hash",[],{length:0,items:[],constructor:function(){this.length=0},remove:function(a){var b;"undefined"!=typeof this.items[a]&&(this.length--,b=this.items[a],delete this.items[a]);return b},get:function(a){return this.items[a]},set:function(a,b){"undefined"!=typeof b&&("undefined"==typeof this.items[a]&&this.length++,this.items[a]=b);return b},has:function(a){return"undefined"!=typeof this.items[a]}})});
+//@ sourceMappingURL=Hash.js.map

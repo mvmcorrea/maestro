@@ -1,0 +1,35 @@
+/******************************************************************************
+ * Elementos
+ ******************************************************************************/
+
+h1 {
+    font-size: 1.2em;
+    color: black;
+}
+
+h2 {
+    font-size: 1em;
+    color: black;
+    margin-top: 15px;
+    margin-left: 0px;
+}
+
+div.texto {
+    background-color: #EEE;
+}
+
+div.extends {
+    font-size: 0.8em;
+}
+
+div.description {
+    margin-top: 10px;
+}
+
+/******************************************************************************
+ * Icons and Images
+ ******************************************************************************/
+
+.referenceIconForm {
+    background-image: url(../images/32x32/form.png);
+}

@@ -1,0 +1,65 @@
+{{$template->css('code',$data->cssFile)}}
+
+{{include $template->file('file','header.html')}}
+
+<div class="container">
+    <h2>ButtonGroup</h2>
+    <hr/>
+    <div class="btn-group">
+        <button type="button" class="btn btn-default">Left</button>
+        <button type="button" class="btn btn-default">Middle</button>
+        <button type="button" class="btn btn-default">Right</button>
+    </div>
+    <hr/>
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default">1</button>
+            <button type="button" class="btn btn-default">2</button>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default">3</button>
+            <button type="button" class="btn btn-default">4</button>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default">5</button>
+            <button type="button" class="btn btn-default">6</button>
+            <button type="button" class="btn btn-default">7</button>
+            <button type="button" class="btn btn-default">8</button>
+        </div>
+    </div>
+    <hr/>
+    <div class="btn-group">
+        <button type="button" class="btn btn-default">1</button>
+        <button type="button" class="btn btn-default">2</button>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                Dropdown
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">Dropdown link</a></li>
+                <li><a href="#">Dropdown link</a></li>
+            </ul>
+        </div>
+    </div>
+    <hr/>
+    <div class="btn-group">
+        <button type="button" class="btn btn-danger">Action</button>
+        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+        </ul>
+    </div>    
+
+
+</div> <!-- /container -->
+
+

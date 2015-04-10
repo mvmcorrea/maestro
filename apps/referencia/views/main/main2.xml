@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../layouts/view.dtd">
+<view>
+    <mvcontainer>
+        <msimpleform id="form2">
+
+            <mhcontainer>
+            <mlookuptextfield id="lookupControl2" label="Controle" width="30px" action="main/lookupControl" related="lookupControl:column0" filter="lookupControl"/>
+            <mbutton id="btnShow2" text="Mostrar">
+                <ajax type="text" event="onClick" url="main/show" load="texto" />
+            </mbutton>
+            </mhcontainer>
+            <mbutton id="btnTest2" text="Submit" action="@main"/>
+        </msimpleform>
+        <mcontentpane id="texto2" class="texto">
+
+        </mcontentpane>
+    </mvcontainer>
+</view>

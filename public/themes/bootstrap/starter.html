@@ -1,0 +1,10 @@
+{{$page->fetch('header')}}
+
+	<div id="navbarPane" class="navbar navbar-inverse navbar-fixed-top" data-dojo-type="manager/ElementPane" data-dojo-props="href:'{{$manager->getURL('main/menu')}}'">
+	</div>
+
+	<div id="centerPane" data-dojo-type="manager/ElementPane">
+		{{$page->generate('content')}}
+	</div>
+
+{{$page->fetch('footer')}}

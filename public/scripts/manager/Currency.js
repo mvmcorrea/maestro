@@ -1,0 +1,4 @@
+//>>built
+define("manager/Currency",["dojo/_base/declare"],function(f){return f("Manager.Currency",[],{constructor:function(){},format:function(a){for(var b=a.value,c="",d=0;d<b.length;d++){var e=b.charAt(d);"0"<=e&&"9">=e&&(c+=e)}b=c.length;if(0==b)return!0;if(3>b)return alert("D\u00c3\u00adgitos insuficientes para valor monet\u00c3\u00a1rio!"),a.focus(),!0;c=c.slice(0,b-2)+","+c.slice(b-2,b);c=this.add(c);a.value=c},remove:function(a){var b=/\(/,c="";b.test(a)&&(c="-");b=/\)|\(|[\.]/g;a=a.replace(b,"");0<=
+a.indexOf("$")&&(a=a.substring(1,a.length));return c+a},add:function(a){var b=/-?[0-9]+\,[0-9]{2}$/;b.test(a)&&(b.compile("^-"),a=addDecimalPoints(a),b.test(a)&&(a="("+a.replace(b,"")+")"));return a}})});
+//@ sourceMappingURL=Currency.js.map

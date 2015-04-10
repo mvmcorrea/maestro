@@ -1,0 +1,3 @@
+//>>built
+require(["dojo/_base/declare","dijit/_TimePicker"],function(e,f){return e("Manager.TimePickerFiltered",[f],{_getFilteredNodes:function(a,e,c){var d=[],b,f=this._maxIncrement+Math.abs(a),h=c?-1:1,k=c?1:0,l=c?0:1;do{a-=k;b=new Date(this._refDate);var g=this._clickableIncrementDate;b.setHours(b.getHours()+g.getHours()*a,b.getMinutes()+g.getMinutes()*a,b.getSeconds()+g.getSeconds()*a);this.isDisabledDate(b)||(b=this._createOption(a))&&d.push(b);a+=l}while(d.length<e&&a*h<f);c&&d.reverse();return d}})});
+//@ sourceMappingURL=TimePickerFiltered.js.map

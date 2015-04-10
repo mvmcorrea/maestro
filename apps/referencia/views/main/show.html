@@ -1,0 +1,23 @@
+<h1>{{$data->class}}</h1>
+{{if isset($data->extends) }}
+<div class="extends">
+	extends from {{$data->extends}}
+</div>
+{{/if}}
+<div class="description">
+	{{$data->description}}
+</div>
+<h2>Atributos</h2>
+<table>
+{{foreach $data->attributes as $attribute}}
+{{strip}}
+   <tr >
+      <td>{{$attribute.name}}</td>
+      <td>{{$attribute.class}}</td>
+      <td>{{$attribute.description}}</td>
+   </tr>
+{{/strip}}
+{{/foreach}}
+</table>
+<h2>Exemplo de código</h2>
+{{$data->code}}

@@ -1,0 +1,4 @@
+//>>built
+define("manager/UTF8",["dojo/_base/declare"],function(e){return e("Manager.UTF8",[],{constructor:function(d){},encode:function(d){d=d.replace(/\r\n/g,"\n");for(var a="",c=0;c<d.length;c++){var b=d.charCodeAt(c);128>b?a+=String.fromCharCode(b):(127<b&&2048>b?a+=String.fromCharCode(b>>6|192):(a+=String.fromCharCode(b>>12|224),a+=String.fromCharCode(b>>6&63|128)),a+=String.fromCharCode(b&63|128))}return a},decode:function(d){for(var a="",c=0,b=c1=c2=0;c<d.length;)b=d.charCodeAt(c),128>b?(a+=String.fromCharCode(b),
+c++):191<b&&224>b?(c2=d.charCodeAt(c+1),a+=String.fromCharCode((b&31)<<6|c2&63),c+=2):(c2=d.charCodeAt(c+1),c3=d.charCodeAt(c+2),a+=String.fromCharCode((b&15)<<12|(c2&63)<<6|c3&63),c+=3);return a}})});
+//@ sourceMappingURL=UTF8.js.map

@@ -1,0 +1,65 @@
+;
+; Script: auth
+;
+; Formato:
+; [nome_da_classe]
+; table = nome_da_tabela
+; extends = nome_da_classe (em caso de herança)
+; log = lista_de_atributos (se o log automático estiver habilitado)
+; description = nome_do_atributo (nome do atributo que descreve o objeto)
+; attributes[nome_do_atributo] = nome_do_campo,tipo,(null | not null),tipo_de_chave (primary|foreign|reference),generator
+; associations[nome_da_associacao] = to_class,cardinalidade (oneToOne|oneToMany|manyToMany),(from:to | associative)
+;
+
+[globals]
+database = "curso"
+app = "vendas0"
+module = "auth"
+
+[Acesso] 
+table = "Acesso"
+attributes['idAcesso'] = "idAcesso,integer,,primary,seq_acesso"
+attributes['idTransacao'] = "idTransacao,integer,not null,foreign"
+attributes['idGrupo'] = "idGrupo,integer,not null,foreign"
+attributes['direito'] = "direito,integer,not null"
+associations['transacao'] = "\auth\models\transacao,oneToOne,idTransacao:idTransacao"
+associations['grupo'] = "\auth\models\grupo,oneToOne,idGrupo:idGrupo"
+
+[Grupo] 
+table = "Grupo"
+log = grupo
+description = grupo
+attributes['idGrupo'] = "idGrupo,integer,,primary,seq_grupo"
+attributes['grupo'] = "grupo,string,not null"
+associations['acessos'] = "\auth\models\acesso,oneToMany,idGrupo:idGrupo"
+associations['usuarios'] = "\auth\models\usuario,manyToMany,usuario_grupo"
+
+[Log] 
+table = "Log"
+attributes['idLog'] = "idLog,integer,,primary,seq_log"
+attributes['idUsuario'] = "idUsuario,integer,not null,foreign"
+attributes['timestamp'] = "timestamp,timestamp"
+attributes['descricao'] = "descricao,string"
+attributes['operacao'] = "operacao,string"
+attributes['idModel'] = "idModel,integer"
+associations['usuario'] = "\auth\models\usuario,oneToOne,idUsuario:idUsuario"
+
+[Transacao] 
+table = "Transacao"
+log = transacao
+description = transacao
+attributes['idTransacao'] = "idTransacao,integer,,primary,seq_transacao"
+attributes['transacao'] = "transacao,string,not null"
+attributes['descricao'] = "descricao,string"
+associations['acessos'] = "\auth\models\acesso,oneToMany,idTransacao:idTransacao"
+
+[Usuario] 
+table = "Usuario"
+log = login
+description = login
+attributes['idUsuario'] = "idUsuario,integer,,primary,seq_usuario"
+attributes['login'] = "login,string,not null"
+attributes['password'] = "password,string"
+attributes['passMD5'] = "passMD5,string"
+associations['grupos'] = "\auth\models\grupo,manyToMany,usuario_grupo"
+

@@ -1,0 +1,26 @@
+{{$template->css('code',$data->cssFile)}}
+
+{{include $template->file('file','header.html')}}
+
+<div class="container">
+    <h2>Alerts</h2>
+    <hr/>
+    <div class="alert alert-warning fade in">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.
+    </div>
+    <hr/>
+    <div class="alert alert-danger fade in">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        <h4>Oh snap! You got an error!</h4>
+        <p>Change this and that and try again. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.</p>
+        <p>
+            <button class="btn btn-danger" type="button">Take this action</button>
+            <button class="btn btn-default" type="button">Or do this</button>
+        </p>
+    </div>
+
+
+</div> <!-- /container -->
+
+

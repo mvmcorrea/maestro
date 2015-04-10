@@ -1,0 +1,5 @@
+<view>
+	<mdiv id="divExemplo" class="divTeste">
+	    <mlabel text="Exemplo"/>
+	</mdiv>
+</view>

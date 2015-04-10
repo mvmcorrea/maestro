@@ -1,0 +1,8 @@
+{{$page->fetch('header_dev')}}
+<!-- basic preloader: -->
+<div id="loader"><div id="loaderInner" style="direction:ltr;">Carregando.... </div></div>
+<div id="centerPane" dojoType="manager/ElementPane">
+    {{$page->generate('content')}}
+</div>
+
+{{$page->fetch('footer')}}

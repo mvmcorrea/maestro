@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../public/layouts/view.dtd">
+<view>
+    <mform title="Pesquisa Controle" close="close" enterAction="submit">
+        <fields>
+            <mhcontainer>
+                <mtextfield id="filter0" label="Controle"  value="$this->data->filter0" size="20"/>
+                <mbuttonfind/>
+            </mhcontainer>
+            <mgrid id="gridLookupControl" data="$this->data->array" pageLength="10">
+                <mdatagridcolumn index="0" title="Controle" width="100%"/>
+            </mgrid>
+        </fields>
+    </mform>
+</view>

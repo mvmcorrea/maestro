@@ -1,0 +1,3 @@
+//>>built
+define("manager/DnD",["dojo/_base/declare"],function(b){return b("Manager.Dnd",[],{id:"",dropped:null,constructor:function(a){this.id=a;this.dropped=[]},onDrop:function(a,d,c,b){var e=this;dojo.forEach(c,function(b,d,c){e.dropped.push(b.id+"\x3d"+a)})},onSubmit:function(){var a="";dojo.forEach(this.dropped,function(b,c,f){a=a+(""==a?"":"\x26")+b});dojo.byId(this.id).value=a;return!0}})});
+//@ sourceMappingURL=DnD.js.map

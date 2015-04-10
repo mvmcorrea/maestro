@@ -1,0 +1,3 @@
+//>>built
+define("manager/DateTextBox",["dojo/_base/declare","dijit/form/DateTextBox"],function(a,b){return a("Manager.DateTextBox",[b],{managerFormat:{selector:"date",datePattern:"dd/MM/yyyy"},value:"",postMixInProperties:function(){this.inherited(arguments);this.value=dojo.date.locale.parse(this.value,this.managerFormat)},serialize:function(a,b){return dojo.date.locale.format(a,this.managerFormat).toUpperCase()}})});
+//@ sourceMappingURL=DateTextBox.js.map

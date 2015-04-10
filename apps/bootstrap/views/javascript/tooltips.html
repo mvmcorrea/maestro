@@ -1,0 +1,24 @@
+{{$template->css('code',$data->cssFile)}}
+
+{{include $template->file('file','header.html')}}
+
+<div class="container">
+    <h2>Tooltips</h2>
+    <hr/>
+    <div class="bs-example tooltip-demo">
+        <p style="margin-bottom: 0;" class="muted">Tight pants next level keffiyeh <a title="" data-toggle="tooltip" href="#" data-original-title="Default tooltip">you probably</a> haven't heard of them. Photo booth beard raw denim letterpress vegan messenger bag stumptown. Farm-to-table seitan, mcsweeney's fixie sustainable quinoa 8-bit american apparel <a title="" data-toggle="tooltip" href="#" data-original-title="Another tooltip">have a</a> terry richardson vinyl chambray. Beard stumptown, cardigans banh mi lomo thundercats. Tofu biodiesel williamsburg marfa, four loko mcsweeney's cleanse vegan chambray. A really ironic artisan <a title="" data-toggle="tooltip" href="#" data-original-title="Another one here too">whatever keytar</a>, scenester farm-to-table banksy Austin <a title="" data-toggle="tooltip" href="#" data-original-title="The last tip!">twitter handle</a> freegan cred raw denim single-origin coffee viral.
+        </p>
+    </div>
+    <hr/>
+    <div class="bs-example tooltip-demo">
+        <div class="bs-example-tooltips">
+            <button title="" data-placement="left" data-toggle="tooltip" class="btn btn-default" type="button" data-original-title="Tooltip on left">Tooltip on left</button>
+            <button title="" data-placement="top" data-toggle="tooltip" class="btn btn-default" type="button" data-original-title="Tooltip on top">Tooltip on top</button>
+            <button title="" data-placement="bottom" data-toggle="tooltip" class="btn btn-default" type="button" data-original-title="Tooltip on bottom">Tooltip on bottom</button>
+            <button title="" data-placement="right" data-toggle="tooltip" class="btn btn-default" type="button" data-original-title="Tooltip on right">Tooltip on right</button>
+        </div>
+    </div>
+</div> <!-- /container -->
+{{$page->onLoad("$('.tooltip-demo').tooltip({selector: '[data-toggle=tooltip]',container: 'body'}); $('.tooltip-test').tooltip();")}}
+
+

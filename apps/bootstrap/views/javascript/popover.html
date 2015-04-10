@@ -1,0 +1,31 @@
+{{$template->css('code',$data->cssFile)}}
+
+{{include $template->file('file','header.html')}}
+
+<div class="container">
+    <h2>Popover</h2>
+    <hr/>
+<div style="padding-bottom: 24px;" class="bs-example">
+      <a role="button" data-content="And here's some amazing content. It's very engaging. right?" title="" data-toggle="popover" class="btn btn-lg btn-danger" href="#" data-original-title="A Title">Click to toggle popover</a>
+    </div>
+    <hr/>
+<div class="bs-example tooltip-demo">
+      <div class="bs-example-tooltips">
+        <button data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-placement="left" data-toggle="popover" data-container="body" class="btn btn-default" type="button" data-original-title="" title="">
+          Popover on left
+        </button>
+        <button data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-placement="top" data-toggle="popover" data-container="body" class="btn btn-default" type="button" data-original-title="" title="">
+          Popover on top
+        </button>
+        <button data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-placement="bottom" data-toggle="popover" data-container="body" class="btn btn-default" type="button" data-original-title="" title="">
+          Popover on bottom
+        </button>
+        <button data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-placement="right" data-toggle="popover" data-container="body" class="btn btn-default" type="button" data-original-title="" title="">
+          Popover on right
+        </button>
+      </div>
+    </div>
+</div> <!-- /container -->
+{{$page->onLoad("$('[data-toggle=popover]').popover(); ")}}
+
+

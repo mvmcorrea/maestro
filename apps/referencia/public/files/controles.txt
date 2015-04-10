@@ -1,0 +1,97 @@
+[MComponent]
+extends = ""
+description = "Classe base para todos os componentes e controles."
+attributes['name'] = "(string) Nome do componente."
+
+[MControl] 
+extends = "MComponent"
+description = "Classe base para todos os controles."
+attributes['id'] = "(string) Identificador."
+attributes['class'] = "(string) Classe CSS."
+attributes['style'] = "(string) Atributo <i>style</i>."
+attributes['readonly'] = "(boolean) Indica se o controle é somente para leitura."
+attributes['enabled'] = "(boolean) Indica se o controle está habilitado/desabilitado."
+attributes['text'] = "(string) Texto associado ao controle."
+attributes['visible'] = "(boolean) Indica se o controle está visível ou não."
+attributes['cdata'] = "(string) Texto <i>XML CDATA</i> associado ao controle."
+
+[MDiv] 
+extends = "MControl"
+description = "Container genérico renderizado com a tag HTML <i>div</i>."
+
+[MContentPane] 
+extends = "MContainerControl"
+description = "Container genérico, que permite a execução de scripts Javascript."
+
+[MContainerControl] 
+extends = "MDiv"
+description = "Container para controles (armazenados internamente em uma lista)."
+
+[MContainer] 
+extends = "MContainerControl"
+description = "Container usado para organizar os controles em um layout horizontal/vertical."
+attributes['showLabel'] = "(boolean) Indica se os labels de cada controle devem ser exibidos ou não."
+
+[MHContainer] 
+extends = "MContainer"
+description = "Container usado para organizar os controles em um layout horizontal."
+
+[MVContainer] 
+extends = "MContainer"
+description = "Container usado para organizar os controles em um layout vertical."
+
+[MAccordion] 
+extends = "MContainerControl"
+description = "Container usado para organizar controles <c>MBaseGroup</c> em painéis verticais."
+
+[MStackContainer] 
+extends = "MContainerControl"
+description = "Container usado para organizar controles em painéis sobrepostos (exibidos um de cada vez)."
+attributes['subscribe'] = "(string) Subscreve um evento, permitindo mudar dinamicamente o painel exibido, com base na publicação deste evento."
+
+[MTabContainer] 
+extends = "MContainerControl"
+description = "Container usado para organizar controles em painéis exibidos horizontalmente (exibidos um de cada vez)."
+attributes['selected'] = "(integer) Indica qual painel deve ser exibido."
+
+[MWindow] 
+extends = "MControl"
+description = "Container exibido em um diálogo, abeto ou fechado a partir de eventos disparados por outros controles."
+
+[MFormControl] 
+extends = "MControl"
+description = "Classe base para controles que podem ser inseridos em um formulário."
+attributes['value'] = "(mixed) Valor associado ao controle."
+attributes['label'] = "(string) Label do controle."
+attributes['help'] = "(string) Texto de ajuda associado ao controle."
+attributes['showLabel'] = "(boolean) Indica se o label do controle será exibido ou não."
+attributes['tooltip'] = "(string) Texto exibido com um tooltip do controle."
+attributes['hint'] = "(string) Texto exibido como hint do controle."
+
+[MInputControl] 
+extends = "MFormControl"
+description = "Classe base para controles que recebem valores de entrada."
+attributes['validator'] = "(object) <c>MValidator</c> associado ao controle."
+
+[MPrompt] 
+extends = "MInputControl"
+description = "Classe para exibição de prompts."
+attributes['caption'] = "(string) Título do prompt."
+attributes['message'] = "(string) Mensagem a ser exibida no prompt."
+attributes['type'] = "(string) Tipo de prompt a ser exibido (information | error | confirmation | question)."
+attributes['close'] = "(action) Ação do botão Fechar."
+attributes['ok'] = "(action) Ação do botão OK."
+attributes['cancel'] = "(action) Ação do botão Cancelar."
+attributes['yes'] = "(action) Ação do botão SIM."
+attributes['no'] = "(action) Ação do botão NÃO."
+
+[MHelp] 
+extends = "MInputControl"
+description = "Classe para exibição de diálogos de ajuda."
+attributes['caption'] = "(string) Título do prompt."
+attributes['message'] = "(string) Mensagem a ser exibida no prompt."
+attributes['close'] = "(action) Ação do botão Fechar."
+
+
+
+
