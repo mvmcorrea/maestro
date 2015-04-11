@@ -3,6 +3,7 @@
 class main extends MActionPanel {
 
     public function __construct() {
+        //teste
         parent::__construct('mainPanel','Wizard',NULL, '>main.main');
         $this->addAction('XMI -> Script', 'wizardIconWizard', 'wizard/main/formXMIScript',
               array('text'=>'A partir de um arquivo XMI cria o script referente a uma aplicação.'));
