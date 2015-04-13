@@ -2,6 +2,6 @@
 <!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
 <view>
     <mform id="main" title="Wizard">
-        <mlabel text="Bem vindo ao Wizard do Framework Maestro. Use o menu ao lado."/>
+        <mlabel text="Bem vindo ao Wizard do Framework Maestro. Use o menu ao lado e escolha uma opção."/>
     </mform>
 </view>
