@@ -28,9 +28,12 @@ class formTree extends MForm {
             array(17, 'Control123', '', 14)
         );
 
+        $myTree = new MTree('tree1');
+        $myTree->setAutoExpand("true");
+
         $fields = array(
             new MLabel("Selected = " . $this->data->id),
-            new MTree('tree1'),
+            $myTree
         );
         $this->setFields($fields);
         $this->tree1->setItemsFromArray($array);

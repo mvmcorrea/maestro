@@ -49,6 +49,7 @@ class MTree extends MControl {
         $this->property->items = array();
         $this->property->key = '3';
         $this->property->data = '0,1,2';
+        $this->property->autoExpand = "false";
     }
 
     public function setItems($value) {
@@ -57,6 +58,14 @@ class MTree extends MControl {
 
     public function getItems() {
         return $this->property->items;
+    }
+
+    public function setAutoExpand($value) {
+        $this->property->autoExpand = $value;
+    }
+
+    public function getAutoExpand() {
+        return $this->property->autoExpand;
     }
 
     public function setKey($value) {
@@ -179,7 +188,8 @@ class MTree extends MControl {
         {$selectEvent}
     },
     layout:'{$this->template}',
-    showRoot:false
+    showRoot:false,
+    autoExpand:{$this->property->autoExpand}
 }    
 
 HERE;
