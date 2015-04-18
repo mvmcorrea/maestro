@@ -7,7 +7,9 @@ return array(
         'models.*'
     ),
     'options' => array(
-        'basePath' => Manager::getHome() . '/core/var/wizard/',   
+        'basePath' => Manager::getHome() . '/core/var/wizard/',
+        //json or text
+        'scriptFormat' => 'json' 
     ),
     'login' => array(
         'module' => "",
