@@ -4,6 +4,8 @@ class MainMenu extends MTree {
 
     public function __construct(){
         parent::__construct('wizardMainMenu');
+
+        $this->setAutoExpand("true");
         
         $array = array(
             array(0, 'Menu', 'wizard/main', 'root'),
