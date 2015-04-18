@@ -1,5 +1,7 @@
 Wizard 2.0
 
+- Todas as views devem estar em XML
+
 - O arquivo script deve suportar dois formatos: 
 	o plano (como é hoje) "idsetor, integer,,seq_id_setor"
 	json	{"table_field_name":"idsetor","type":"integer","key":"true","sequence_name"}
