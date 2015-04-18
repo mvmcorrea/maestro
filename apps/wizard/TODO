@@ -1,0 +1,24 @@
+Wizard 2.0
+
+- O arquivo script deve suportar dois formatos: 
+	o plano (como é hoje) "idsetor, integer,,seq_id_setor"
+	json	{"table_field_name":"idsetor","type":"integer","key":"true","sequence_name"}
+
+- O gerador de script deve suportar o banco de dados MySql
+
+- O wizard deve ser capaz de criar views com a seguinte estrutura:
+	- Obter o nome da view no formato <app>/<controller>/<action>
+	- Criar o método no controller
+	- Criar o arquivo actionForm.xml
+	- Criar o arquivo actionFields.xml
+	- Possibilitar a criação do arquivo JS actionjs.js
+
+- Tanto o arquivo XMI, quanto o script, quanto a aplicação 
+gerada devem estar na mesma pasta options.basePath
+
+
+Wizard 2.1
+
+- O wizard deverá ter mais ferramentas direcionadas ao MySql. Dentre elas a criacao de campos pelo wizard com a exportação para o script e para o banco. O usuário deverá ser capaz de adicionar o campo "TelefoneCelular" cujo o tipo é Telefone. O campo será criado na tabela.
+
+- Verificar se é possivel criar um addon para o sublime capaz de executar as funcoes do wizard (semelhante ao git)
