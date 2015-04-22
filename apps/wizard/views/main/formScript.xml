@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../public/layouts/view.dtd">
+<view>
+    <mform id="form" title="Script Wizard" close=">">
+        <fields>
+           <mtextfield id="script" label="Script File" hint="Arquivo dentro do files/scripts"/> 
+        </fields>
+        <buttons>
+            <mbutton id="btnPost" text="Generate" action="@wizard/main/createScript"/>
+        </buttons>
+        <validators>
+        </validators>
+    </mform>
+</view>
