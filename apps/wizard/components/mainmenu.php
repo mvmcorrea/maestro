@@ -10,7 +10,7 @@ class MainMenu extends MTree {
         $array = array(
             array(0, 'Menu', 'wizard/main', 'root'),
             array(1, 'XMI >> Script', 'main/formXMIScript', 0),
-            array(2, 'MySql >> Script', 'main/formScript', 0),
+            array(2, 'MySql >> Script', 'main/formReverseMySql', 0),
             array(3, 'Script >> App', 'main/formScript', 0),
 
         );
