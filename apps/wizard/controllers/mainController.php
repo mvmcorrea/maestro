@@ -37,6 +37,7 @@ class MainController extends MController {
     }
 
     public function formXMIScript() {
+        $this->data->action = "@wizard/main/createXMIScript";
         $this->render();
     }
 

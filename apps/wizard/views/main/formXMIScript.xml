@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../public/layouts/view.dtd">
+<view>
+	<mform id="formXMIScript" title="XMI >> Script" close=">/wizard/main/">
+		<fields>
+			
+
+		</fields>
+		<buttons>
+			<mbutton id="btnSubmit" text="Enviar" action="$this->data->action"/>
+		</buttons>
+		<validators>
+		</validators>
+	</mform>
+</view>
