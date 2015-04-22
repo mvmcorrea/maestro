@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
+<view>
+    <fields>
+         <mhiddenfield id="lostpass::idPass" />        
+<mtextfield id="lostpass::code" label="Code" />        
+<mtextfield id="lostpass::ipAddress" label="IpAddress" />        
+<mtimestampfield id="lostpass::tsRegistro" label="TsRegistro" />        
+<mtextfield id="lostpass::ipAddressResposta" label="IpAddressResposta" />        
+<mtimestampfield id="lostpass::tsResposta" label="TsResposta" />        
+<mlookupfieldvalue id="lostpass::idUsuarioDesc"  label="Usuario"  related="lostpass::idUsuario:idUsuario,lostpass::idUsuarioDesc:descricao" action="common/usuario/lookup" /><mhiddenfield id="lostpass::idUsuario" />
+    </fields>
+    <buttons>
+        <mbutton id="btnPost" text="Enviar" action="$this->data->action"/>
+    </buttons>
+    <validators>
+    </validators>
+</view>

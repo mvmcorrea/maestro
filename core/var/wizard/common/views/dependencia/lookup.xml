@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
+<view>
+    <mform title="Pesquisa Dependencia" close="close" enterAction="submit">
+        <fields>
+            <mhcontainer>
+                <mtextfield id="filter0" label="IdDependencia" value="$this->data->filter0" size="30" />
+                <mbuttonfind />
+            </mhcontainer>
+            <mdatagrid id="lookupTable" query="$this->data->query" pageLength="15">
+                <mdatagridcolumn field="idDependencia" visible="false"/>
+                <mdatagridhyperlink field="idDependencia" title="IdDependencia" width="100%"/>
+            </mdatagrid>
+        </fields>
+    </mform>
+</view>

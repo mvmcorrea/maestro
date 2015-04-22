@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
+<view>
+    <fields>
+         <mhiddenfield id="foto::idFoto" />        
+<mfilefield id="foto::foto" label="foto::Foto" multiple="false" text="Selecionar Arquivo" />        
+<mlookupfieldvalue id="foto::idMIMEDesc"  label="MIME"  related="foto::idMIME:idMIME,foto::idMIMEDesc:descricao" action="common/mime/lookup" /><mhiddenfield id="foto::idMIME" />
+    </fields>
+    <buttons>
+        <mbutton id="btnPost" text="Enviar" action="$this->data->action"/>
+    </buttons>
+    <validators>
+    </validators>
+</view>

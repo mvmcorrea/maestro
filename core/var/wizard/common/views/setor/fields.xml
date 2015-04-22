@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
+<view>
+    <fields>
+         <mhiddenfield id="setor::idSetor" />        
+<mtextfield id="setor::sigla" label="Sigla" />        
+<mtextfield id="setor::nome" label="Nome" />        
+<mcalendarfield id="setor::dataInicio" label="DataInicio" />        
+<mcalendarfield id="setor::dataFim" label="DataFim" />        
+<mtextfield id="setor::telefone" label="Telefone" />        
+<mtextfield id="setor::fax" label="Fax" />        
+<mtextfield id="setor::localizacao" label="Localizacao" />        
+<mlookupfieldvalue id="setor::idTipoSetorDesc"  label="TipoSetor"  related="setor::idTipoSetor:idTipoSetor,setor::idTipoSetorDesc:descricao" action="common/tiposetor/lookup" /><mhiddenfield id="setor::idTipoSetor" />
+    </fields>
+    <buttons>
+        <mbutton id="btnPost" text="Enviar" action="$this->data->action"/>
+    </buttons>
+    <validators>
+    </validators>
+</view>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
+<view>
+    <fields>
+         <mhiddenfield id="grupo::idGrupo" />        
+<mtextfield id="grupo::grupo" label="Grupo" />        
+<mtextfield id="grupo::descricao" label="Descricao" />        
+<mlookupfieldvalue id="grupo::idGrupoPaiDesc"  label="GrupoPai"  related="grupo::idGrupoPai:idGrupoPai,grupo::idGrupoPaiDesc:descricao" action="common/grupopai/lookup" /><mhiddenfield id="grupo::idGrupoPai" />
+    </fields>
+    <buttons>
+        <mbutton id="btnPost" text="Enviar" action="$this->data->action"/>
+    </buttons>
+    <validators>
+    </validators>
+</view>

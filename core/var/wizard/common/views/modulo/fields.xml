@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
+<view>
+    <fields>
+         <mhiddenfield id="modulo::idModulo" />        
+<mtextfield id="modulo::nome" label="Nome" />        
+<mtextfield id="modulo::versaoAtual" label="VersaoAtual" />        
+<mtextfield id="modulo::moduloSIGA" label="ModuloSIGA" />        
+<mtextfield id="modulo::prefixoBD" label="PrefixoBD" />        
+<mlookupfieldvalue id="modulo::idPessoaDesc"  label="Pessoa"  related="modulo::idPessoa:idPessoa,modulo::idPessoaDesc:descricao" action="common/pessoa/lookup" /><mhiddenfield id="modulo::idPessoa" />        
+<mlookupfieldvalue id="modulo::idPessoa2Desc"  label="Pessoa2"  related="modulo::idPessoa2:idPessoa2,modulo::idPessoa2Desc:descricao" action="common/pessoa2/lookup" /><mhiddenfield id="modulo::idPessoa2" />
+    </fields>
+    <buttons>
+        <mbutton id="btnPost" text="Enviar" action="$this->data->action"/>
+    </buttons>
+    <validators>
+    </validators>
+</view>

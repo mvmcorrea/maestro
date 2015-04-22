@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
+<view>
+    <fields>
+         <mhiddenfield id="municipio::idMunicipio" />        
+<mtextfield id="municipio::municipio" label="Municipio" />        
+<mtextfield id="municipio::numero" label="Numero" />        
+<mtextfield id="municipio::tipo" label="Tipo" />        
+<mnumberfield id="municipio::populacao" label="Populacao" />        
+<mlookupfieldvalue id="municipio::idPaisDesc"  label="Pais"  related="municipio::idPais:idPais,municipio::idPaisDesc:descricao" action="common/pais/lookup" /><mhiddenfield id="municipio::idPais" />        
+<mlookupfieldvalue id="municipio::idUFDesc"  label="UF"  related="municipio::idUF:idUF,municipio::idUFDesc:descricao" action="common/uf/lookup" /><mhiddenfield id="municipio::idUF" />
+    </fields>
+    <buttons>
+        <mbutton id="btnPost" text="Enviar" action="$this->data->action"/>
+    </buttons>
+    <validators>
+    </validators>
+</view>

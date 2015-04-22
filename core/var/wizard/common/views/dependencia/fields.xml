@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
+<view>
+    <fields>
+         <mhiddenfield id="dependencia::idDependencia" />        
+<mtextfield id="dependencia::dependencia" label="Dependencia" />        
+<mbooleanfield id="dependencia::ativa" label="Ativa" />        
+<mbooleanfield id="dependencia::temAula" label="TemAula" />        
+<mnumberfield id="dependencia::numeroAlunos" label="NumeroAlunos" />        
+<mlookupfieldvalue id="dependencia::idTipoDependenciaDesc"  label="TipoDependencia"  related="dependencia::idTipoDependencia:idTipoDependencia,dependencia::idTipoDependenciaDesc:descricao" action="common/tipodependencia/lookup" /><mhiddenfield id="dependencia::idTipoDependencia" />        
+<mlookupfieldvalue id="dependencia::idSetorDesc"  label="Setor"  related="dependencia::idSetor:idSetor,dependencia::idSetorDesc:descricao" action="common/setor/lookup" /><mhiddenfield id="dependencia::idSetor" />
+    </fields>
+    <buttons>
+        <mbutton id="btnPost" text="Enviar" action="$this->data->action"/>
+    </buttons>
+    <validators>
+    </validators>
+</view>

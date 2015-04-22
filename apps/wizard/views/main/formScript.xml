@@ -3,7 +3,7 @@
 <view>
     <mform id="form" title="Script Wizard" close=">">
         <fields>
-           <mtextfield id="script" label="Script File" hint="Arquivo dentro do files/scripts"/> 
+           <mtextfield id="script" label="Script File" hint="Arquivo script (.txt) com informações das tabelas e seus relacionamentos"/> 
         </fields>
         <buttons>
             <mbutton id="btnPost" text="Generate" action="@wizard/main/createScript"/>

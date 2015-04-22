@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
+<view>
+    <fields>
+         <mhiddenfield id="acesso::idAcesso" />        
+<mlookupfieldvalue id="acesso::idTransacaoDesc"  label="Transacao"  related="acesso::idTransacao:idTransacao,acesso::idTransacaoDesc:descricao" action="common/transacao/lookup" /><mhiddenfield id="acesso::idTransacao" />        
+<mlookupfieldvalue id="acesso::idGrupoDesc"  label="Grupo"  related="acesso::idGrupo:idGrupo,acesso::idGrupoDesc:descricao" action="common/grupo/lookup" /><mhiddenfield id="acesso::idGrupo" />
+    </fields>
+    <buttons>
+        <mbutton id="btnPost" text="Enviar" action="$this->data->action"/>
+    </buttons>
+    <validators>
+    </validators>
+</view>

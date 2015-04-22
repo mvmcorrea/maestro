@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
+<view>
+    <fields>
+         <mhiddenfield id="agencia::idAgencia" />        
+<mtextfield id="agencia::numero" label="Numero" />        
+<mtextfield id="agencia::nome" label="Nome" />        
+<mlookupfieldvalue id="agencia::idBancoDesc"  label="Banco"  related="agencia::idBanco:idBanco,agencia::idBancoDesc:descricao" action="common/banco/lookup" /><mhiddenfield id="agencia::idBanco" />
+    </fields>
+    <buttons>
+        <mbutton id="btnPost" text="Enviar" action="$this->data->action"/>
+    </buttons>
+    <validators>
+    </validators>
+</view>

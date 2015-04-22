@@ -47,7 +47,9 @@ class MainController extends MController {
         $moduleName = $this->data->module;
         $databaseName = $this->data->database;
         $package = $this->data->package;
-        $fileXMI = Manager::getAppPath('public/files/xmi/') . $fileName;
+        
+        //$fileXMI = Manager::getAppPath('public/files/xmi/') . $fileName;
+        $fileXMI = Manager::getOptions('basePath') . $fileName;
 
         if (!file_exists($fileXMI)) {
             $fileXMI.=".xmi";
@@ -79,7 +81,8 @@ class MainController extends MController {
 
     public function createScript() {
         $fileName = $this->data->script;
-        $fileScript = Manager::getAppPath('public/files/scripts/') . $fileName;
+        //$fileScript = Manager::getAppPath('public/files/scripts/') . $fileName;
+        $fileScript = Manager::getOptions('basePath') . $fileName;
 
         if (!file_exists($fileScript)) {
             $fileScript.=".txt";

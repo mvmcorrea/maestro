@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
+<view>
+    <mform id="formFind" title="Pesquisar" close=">common/main" base="formBase">
+        <fields>
+            <mhcontainer>
+                <mtextfield id="idFeriado" label="IdFeriado" value="$this->data->idFeriado" size="15" />
+                <mbuttonfind/>
+            </mhcontainer>
+            <mdatagrid id="gridFind" query="$this->data->query" pageLength="15">
+                <mdatagridcolumn field="idFeriado" visible="false"/>
+                <mdatagridhyperlink field="idFeriado" action=">common/feriado/formObject/#0#" title="IdFeriado" width="100%"/>
+            </mdatagrid>
+        </fields>
+    </mform>
+</view>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
+<view>
+    <fields>
+         <mhiddenfield id="setoracesso::idSetorAcesso" />        
+<mtextfield id="setoracesso::finalidade" label="Finalidade" />        
+<mlookupfieldvalue id="setoracesso::idSetorPaiDesc"  label="SetorPai"  related="setoracesso::idSetorPai:idSetorPai,setoracesso::idSetorPaiDesc:descricao" action="common/setorpai/lookup" /><mhiddenfield id="setoracesso::idSetorPai" />        
+<mlookupfieldvalue id="setoracesso::idSetorFilhoDesc"  label="SetorFilho"  related="setoracesso::idSetorFilho:idSetorFilho,setoracesso::idSetorFilhoDesc:descricao" action="common/setorfilho/lookup" /><mhiddenfield id="setoracesso::idSetorFilho" />
+    </fields>
+    <buttons>
+        <mbutton id="btnPost" text="Enviar" action="$this->data->action"/>
+    </buttons>
+    <validators>
+    </validators>
+</view>

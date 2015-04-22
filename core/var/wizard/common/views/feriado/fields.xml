@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
+<view>
+    <fields>
+         <mhiddenfield id="feriado::idFeriado" />        
+<mcalendarfield id="feriado::dataFeriado" label="DataFeriado" />        
+<mtextfield id="feriado::descricao" label="Descricao" />        
+<mtextfield id="feriado::abrangencia" label="Abrangencia" />
+    </fields>
+    <buttons>
+        <mbutton id="btnPost" text="Enviar" action="$this->data->action"/>
+    </buttons>
+    <validators>
+    </validators>
+</view>

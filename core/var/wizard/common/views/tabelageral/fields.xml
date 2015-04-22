@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
+<view>
+    <fields>
+         <mhiddenfield id="tabelageral::idTabelaGeral" />        
+<mtextfield id="tabelageral::tabela" label="Tabela" />        
+<mtextfield id="tabelageral::item1" label="Item1" />        
+<mtextfield id="tabelageral::item2" label="Item2" />        
+<mtextfield id="tabelageral::item3" label="Item3" />
+    </fields>
+    <buttons>
+        <mbutton id="btnPost" text="Enviar" action="$this->data->action"/>
+    </buttons>
+    <validators>
+    </validators>
+</view>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
+<view>
+    <fields>
+         <mhiddenfield id="documentacao::idDocumentacao" />        
+<mtextfield id="documentacao::numeroRG" label="NumeroRG" />        
+<mtextfield id="documentacao::tipoRG" label="TipoRG" />        
+<mcalendarfield id="documentacao::dataRG" label="DataRG" />        
+<mtextfield id="documentacao::orgaoRG" label="OrgaoRG" />        
+<mtextfield id="documentacao::UFRG" label="UFRG" />        
+<mtextfield id="documentacao::numeroCarteiraProfissional" label="NumeroCarteiraProfissional" />        
+<mtextfield id="documentacao::serieCarteiraProfissional" label="SerieCarteiraProfissional" />        
+<mtextfield id="documentacao::UFCarteiraProfissional" label="UFCarteiraProfissional" />        
+<mtextfield id="documentacao::tituloEleitor" label="TituloEleitor" />        
+<mtextfield id="documentacao::zonaTitulo" label="ZonaTitulo" />        
+<mtextfield id="documentacao::secaoTitulo" label="SecaoTitulo" />        
+<mtextfield id="documentacao::UFTitulo" label="UFTitulo" />        
+<mtextfield id="documentacao::numeroDocumentoMilitar" label="NumeroDocumentoMilitar" />        
+<mtextfield id="documentacao::serieDocumentoMilitar" label="SerieDocumentoMilitar" />        
+<mtextfield id="documentacao::categoriaDocumentoMilitar" label="CategoriaDocumentoMilitar" />        
+<mtextfield id="documentacao::tipoDocumentoMilitar" label="TipoDocumentoMilitar" />        
+<mtextfield id="documentacao::orgaoExpedidorDocumentoMilitar" label="OrgaoExpedidorDocumentoMilitar" />        
+<mtextfield id="documentacao::numeroCertidao" label="NumeroCertidao" />        
+<mtextfield id="documentacao::livroCertidao" label="LivroCertidao" />        
+<mtextfield id="documentacao::folhaCertidao" label="FolhaCertidao" />        
+<mtextfield id="documentacao::cartorio" label="Cartorio" />        
+<mtextfield id="documentacao::PISPASEP" label="PISPASEP" />        
+<mcalendarfield id="documentacao::dataPISPASEP" label="DataPISPASEP" />        
+<mtextfield id="documentacao::identidadeProfissional" label="IdentidadeProfissional" />        
+<mtextfield id="documentacao::tipoIdentidadeProfissional" label="TipoIdentidadeProfissional" />        
+<mcalendarfield id="documentacao::dataCarteiraEstudante" label="DataCarteiraEstudante" />        
+<mtextfield id="documentacao::passaporte" label="Passaporte" />        
+<mlookupfieldvalue id="documentacao::idBancoPISPASEPDesc"  label="BancoPISPASEP"  related="documentacao::idBancoPISPASEP:idBancoPISPASEP,documentacao::idBancoPISPASEPDesc:descricao" action="common/bancopispasep/lookup" /><mhiddenfield id="documentacao::idBancoPISPASEP" />
+    </fields>
+    <buttons>
+        <mbutton id="btnPost" text="Enviar" action="$this->data->action"/>
+    </buttons>
+    <validators>
+    </validators>
+</view>

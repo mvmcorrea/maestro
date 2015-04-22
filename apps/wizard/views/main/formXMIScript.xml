@@ -3,7 +3,9 @@
 <view>
 	<mform id="formXMIScript" title="XMI >> Script" close=">/wizard/main/">
 		<fields>
-			<mtextfield id="xmi" label="XMI file" hint="Arquivo dentro do files/xmi"/>
+			<mlabel text="Atenção" bold="true" color="#000000"/>		
+			<mlabel text="Este arquivo XMI deve ser gerado através do Visual Paradigm Professional" bold="false" color="#000000"/>		
+			<mtextfield id="xmi" label="XMI file" hint="Arquivo XMI"/>
 			<mtextfield id="app" label="Aplicação" hint=" app que o script pertence (abaixo do maestro/apps)"/>
 			<mtextfield id="module" label="Módulo" hint="O módulo da app (abaixo de maestro/apps/nomedaapp/modules)"/>
 			<mtextfield id="database" label="Database" hint="O nome do banco de dados, abaixo do db do conf.php"/>

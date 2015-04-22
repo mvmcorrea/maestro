@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
+<view>
+    <fields>
+         <mhiddenfield id="banco::idBanco" />        
+<mtextfield id="banco::numero" label="Numero" />        
+<mtextfield id="banco::nome" label="Nome" />        
+<mbooleanfield id="banco::ativo" label="Ativo" />
+    </fields>
+    <buttons>
+        <mbutton id="btnPost" text="Enviar" action="$this->data->action"/>
+    </buttons>
+    <validators>
+    </validators>
+</view>

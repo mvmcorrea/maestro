@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE view SYSTEM "../../../../public/layouts/view.dtd">
+<view>
+    <mform id="formFind" title="Pesquisar" close=">common/main" base="formBase">
+        <fields>
+            <mhcontainer>
+                <mtextfield id="idEndereco" label="IdEndereco" value="$this->data->idEndereco" size="15" />
+                <mbuttonfind/>
+            </mhcontainer>
+            <mdatagrid id="gridFind" query="$this->data->query" pageLength="15">
+                <mdatagridcolumn field="idEndereco" visible="false"/>
+                <mdatagridhyperlink field="idEndereco" action=">common/endereco/formObject/#0#" title="IdEndereco" width="100%"/>
+            </mdatagrid>
+        </fields>
+    </mform>
+</view>
