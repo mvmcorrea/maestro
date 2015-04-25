@@ -296,7 +296,7 @@ function handleClass($elements) {
             continue;
         }
 
-        mdump('handleClass = ' . $classNameXMI);
+        //mdump('handleClass = ' . $classNameXMI);
 
         $docassoc = $docattr = $attributes = array();
         $document[] = '[' . $classNameXMI . ']';
@@ -453,7 +453,7 @@ function handleClass($elements) {
 
                         if (($attribute != '') && (!$attributes[$attribute[0]])) {
                             if ($jsonFormat)
-                                $docattr[] = "attributes['{$attribute[0]}'] = '{\"colName\":\"{$attribute[0]}\",\"coltype\":\"{$attribute[2]}\",\"foreign\":\"true\"}'";
+                                $docattr[] = "attributes['{$attribute[0]}'] = '{\"colName\":\"{$attribute[0]}\",\"colType\":\"{$attribute[2]}\",\"foreign\":\"true\"}'";
                            else
                             $docattr[] = "attributes['{$attribute[0]}'] = \"{$attribute[0]},{$attribute[2]},,foreign\"";
 
@@ -468,10 +468,10 @@ function handleClass($elements) {
                     $toClass = $association[0];
                     $module = $this->nodes['classModule'][$id];
                     if ($jsonFormat)
-                    $docattr[] = "associations['{$toClass}s'] = '{\"toClass\":\"{$module}\models\\{$toClass}\",\"cardinality\":\"oneToMany\",\"fieldKey\":\"{$pk}:{$pk}\"}'";
+                    $docattr[] = "associations['{$toClass}s'] = '{\"toClass\":\"{$module}\\\\models\\\\{$toClass}\",\"cardinality\":\"oneToMany\",\"relation\":\"{$pk}:{$pk}\"}'";
 
                         else
-                    $docattr[] = "associations['{$toClass}s'] = \"{$module}\models\\{$toClass},oneToMany,{$pk}:{$pk}\"";
+                    $docattr[] = "associations['{$toClass}s'] = \"{$module}\\models\\{$toClass},oneToMany,{$pk}:{$pk}\"";
                 }
             }
 
@@ -493,11 +493,11 @@ function handleClass($elements) {
                     $moduleSubClass = $this->nodes['classModule'][$especialization];
                     $subClass = $this->nodes['uml:Class'][$especialization];
                     $subClassName = lcfirst($subClass->getAttributeNode('name')->value);
-                    $subClassNameFull = "\\" . $moduleSubClass . "\models\\" . $subClassName;
+                    $subClassNameFull = "\\" . $moduleSubClass . "\\models\\" . $subClassName;
                     $key = $this->nodes['PK'][$id];
 
                     if ($jsonFormat)
-                        $docassoc[] = "associations['{$subClassName}'] = '{\"toClass\":\"{$subClassNameFull}\",\"cardinality\":\"oneToOne\",\"fieldKey\":\"{$key[0]}:{$key[1]}\"}'";
+                        $docassoc[] = "associations['{$subClassName}'] = '{\"toClass\":\"{$subClassNameFull}\",\"cardinality\":\"oneToOne\",\"relation\":\"{$key[0]}:{$key[1]}\"}'";
                         else
                             $docassoc[] = "associations['{$subClassName}'] = \"{$subClassNameFull},oneToOne,{$key[0]}:{$key[1]}\"";
                 }
@@ -557,9 +557,9 @@ function handleClass($elements) {
         }
 
         if ($jsonFormat)
-            $at .= "\"toClass\":\"{$module}\models\\{$toClass}\"";
+            $at .= "\"toClass\":\"{$module}\\\\models\\\\{$toClass}\"";
         else            
-            $at .= "{$module}\models\\{$toClass}";
+            $at .= "{$module}\\models\\{$toClass}";
 
         $c0 = $c1 = '';
         $lower = $this->getChild($association, 'lowerValue');

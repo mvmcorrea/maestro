@@ -482,7 +482,7 @@ class MWizardORM {
             $fromClass = strtolower($from->getAttributeNode('name')->value);
             $autoAssociation = ($toClass == $fromClass);
         }
-        $params['toClass'] = "\\{$module}\models\\{$toClass}";
+        $params['toClass'] = "\\{$module}\\models\\{$toClass}";
 
         $c0 = $c1 = '';
         $lower = $this->getChild($association, 'lowerValue');

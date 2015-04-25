@@ -129,6 +129,8 @@ class MWizardScript {
                     $at[] = ($jsonAttributeData['primary']?"primary":"");
                     $at[] =  $jsonAttributeData['sequence'];
 
+                    if ($jsonAttributeData['foreign'])
+                        $at[3]="foreign";
                
                 }else{
                     $at = explode(',', $attributeData);
@@ -214,11 +216,12 @@ class MWizardScript {
                     $assoc = null;
                     if ($this->isJsonFormat()){
 
-                        $jsonAssociationData = json_decode($associationData);
+                        $jsonAssociationData = \MJSON::decode($associationData);
                         $assoc = array();
                         $assoc[0]=$jsonAssociationData['toClass'];
                         $assoc[1]=$jsonAssociationData['cardinality'];
-                        $assoc[2]=$jsonAssociationData['relation']||$jsonAssociationData['tableName'];
+                        $assoc[2]=$jsonAssociationData['tableName'];
+                        $assoc[3]=$jsonAssociationData['relation'];
 
                     }else{
                          $assoc = explode(',', $associationData);
@@ -235,7 +238,7 @@ class MWizardScript {
                     if ($assoc[1] == 'manyToMany') {
                         $association .= ", 'associative' => '{$assoc[2]}'), ";
                     } else {
-                        $association .= ", 'keys' => '{$assoc[2]}'), ";
+                        $association .= ", 'keys' => '{$assoc[3]}'), ";
                     }
 
                     $properties .= "\n    protected " . "\$" . $associationName . ";";

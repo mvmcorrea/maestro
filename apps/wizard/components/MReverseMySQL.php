@@ -69,7 +69,7 @@ class MReverseMySQL {
                     $classes[$table]['associations'][$associationName] = $assoc;
                     // cria a inversa oneToMany
                     $associationName2 = (($fk[2] != $associationName) ? $table . $associationName : $table) . 's';
-                    $assoc2 = "association['" . $associationName2 . "'] = " . '"\\' . $this->appName . "\\models\\" . $table . ',oneToMany,' . $fk[3] . ':' . $fk[1] . '"';
+                    $assoc2 = "association['" . $associationName2 . "'] = " . '"\\\\' . $this->appName . "\\\\models\\\\" . $table . ',oneToMany,' . $fk[3] . ':' . $fk[1] . '"';
                     $classes[$fk[2]]['associations'][$associationName2] = $assoc2;
                 } else {
                     $classes[$table]['associations'][$associationName] = $fk[2];
