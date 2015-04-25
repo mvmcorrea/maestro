@@ -1,6 +1,6 @@
 Wizard 2.0
 
-- Todas as views devem estar em XML
+ok - Todas as views devem estar em XML
 
 - O arquivo script deve suportar dois formatos: 
 	o plano (como é hoje) "idsetor, integer,,seq_id_setor"
@@ -15,7 +15,7 @@ Wizard 2.0
 	- Criar o arquivo actionFields.xml
 	- Possibilitar a criação do arquivo JS actionjs.js
 
-- Tanto o arquivo XMI, quanto o script, quanto a aplicação 
+ok - Tanto o arquivo XMI, quanto o script, quanto a aplicação 
 gerada devem estar na mesma pasta options.basePath
 
 

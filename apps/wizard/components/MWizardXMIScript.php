@@ -60,8 +60,8 @@ class MWizardXMIScript {
         $this->handleClassGeneralization();
 
         $elements = $this->xpath->query("//ownedMember[@name='{$this->package}']/ownedMember[@xmi:type='uml:Class'] | " .
-                " //ownedMember[@name='{$this->package}']/ownedMember[@xmi:type='uml:AssociationClass'] | " .
-                " //ownedMember[@name='{$this->package}']/ownedMember[@xmi:type='uml:Enumeration'] ");
+            " //ownedMember[@name='{$this->package}']/ownedMember[@xmi:type='uml:AssociationClass'] | " .
+            " //ownedMember[@name='{$this->package}']/ownedMember[@xmi:type='uml:Enumeration'] ");
 
         if ($elements->length > 0) {
             $this->handleClass($elements);
@@ -69,7 +69,7 @@ class MWizardXMIScript {
         }
         else
         	throw new Exception("Não foi possível encontrar o Package {$this->package} no arquivo XMI.", 1);
-        	
+
     }
 
     private function parse($domNode) {
@@ -89,266 +89,271 @@ class MWizardXMIScript {
             foreach ($array AS $domAttribute) {
                 if ($domAttribute->name == "type") {
                     if (($domAttribute->value == "uml:Association") ||
-                            ($domAttribute->value == "uml:Class") ||
-                            ($domAttribute->value == "uml:Property") ||
-                            ($domAttribute->value == "dbTable") ||
-                            ($domAttribute->value == "dbColumn") ||
-                            ($domAttribute->value == "dbForeignKey") ||
-                            ($domAttribute->value == "dbForeignKeyConstraint") ||
-                            ($domAttribute->value == "uml:Enumeration") ||
-                            ($domAttribute->value == "uml:AssociationClass")) {
+                        ($domAttribute->value == "uml:Class") ||
+                        ($domAttribute->value == "uml:Property") ||
+                        ($domAttribute->value == "dbTable") ||
+                        ($domAttribute->value == "dbColumn") ||
+                        ($domAttribute->value == "dbForeignKey") ||
+                        ($domAttribute->value == "dbForeignKeyConstraint") ||
+                        ($domAttribute->value == "uml:Enumeration") ||
+                        ($domAttribute->value == "uml:AssociationClass")) {
                         $ok = true;
-                        $type = trim($domAttribute->value);
-                    }
-                }
-                if ($domAttribute->name == "id") {
-                    $id = trim($domAttribute->value);
-                }
-                if ($domAttribute->name == "foreignKey") {
-                    $fk = trim($domAttribute->value);
-                }
-                if ($domAttribute->name == "relationshipEndModel") {
-                    $rel = trim($domAttribute->value);
+                    $type = trim($domAttribute->value);
                 }
             }
-            if ($ok) {
-                $this->nodes[$type][$id] = $node;
-
-                if ($type == "dbForeignKeyConstraint") {
-                    $this->nodes[$type][$fk] = $node;
-                }
-                if ($type == "dbForeignKey") {
-                    $this->nodes[$type][$rel] = $node;
-                }
+            if ($domAttribute->name == "id") {
+                $id = trim($domAttribute->value);
+            }
+            if ($domAttribute->name == "foreignKey") {
+                $fk = trim($domAttribute->value);
+            }
+            if ($domAttribute->name == "relationshipEndModel") {
+                $rel = trim($domAttribute->value);
             }
         }
-        if ($node->hasChildNodes()) {
-            $this->parse($node);
-        }
-    }
+        if ($ok) {
+            $this->nodes[$type][$id] = $node;
 
-    private function handleAssociation() {
-        foreach ($this->nodes['uml:Association'] as $idA => $assoc) {
-            $i = 0;
-            $association = array();
-            $a = $assoc->firstChild;
-            while ($a) {
-                if ($a->nodeType == XML_ELEMENT_NODE) {
-                    if ($a->nodeName == 'memberEnd') {
-                        $idref = $a->getAttributeNode('xmi:idref')->value;
-                        $property = $this->nodes['uml:Property'][$idref];
-                        $association[$i++] = $property;
-                    }
-                }
-                $a = $a->nextSibling;
+            if ($type == "dbForeignKeyConstraint") {
+                $this->nodes[$type][$fk] = $node;
             }
-            if ((count($association) == 0) ||
-                    !($association[0] instanceof DomElement) || !($association[1] instanceof DomElement)) {
-                $this->errors[] = 'Error at Association ' . $idA;
-            } else {
-                $class0 = $association[0]->getAttributeNode('type')->value;
-                $this->nodes['Associations'][$class0][$idA] = $association;
-                $class1 = $association[1]->getAttributeNode('type')->value;
-                $this->nodes['Associations'][$class1][$idA] = $association;
+            if ($type == "dbForeignKey") {
+                $this->nodes[$type][$rel] = $node;
             }
         }
     }
-
-    private function handleAssociationClass() {
-        foreach ($this->nodes['uml:AssociationClass'] as $idA => $assoc) {
-            $i = 0;
-            $association = $associationExtra = array();
-            $a = $assoc->firstChild;
-            while ($a) {
-                if ($a->nodeType == XML_ELEMENT_NODE) {
-                    if ($a->nodeName == 'memberEnd') {
-                        $idref = $a->getAttributeNode('xmi:idref')->value;
-                        $property = $this->nodes['uml:Property'][$idref];
-                        $association[$i] = $property;
-                        $i++;
-                    }
-                }
-                $a = $a->nextSibling;
-            }
-            if ((count($association) == 0) ||
-                    !($association[0] instanceof DomElement) || !($association[1] instanceof DomElement)) {
-                $this->errors[] = 'Error at Association ' . $idA;
-            } else {
-                $class0 = $association[0]->getAttributeNode('type')->value;
-                $class1 = $association[1]->getAttributeNode('type')->value;
-                $this->nodes['Associations'][$class0][$class1] = $association;
-                $this->nodes['Associations'][$class1][$class0] = $association;
-                $this->nodes['AssociativeClass'][$class0][$idA] = array(strtolower($assoc->getAttributeNode('name')->value), $idA);
-                $this->nodes['AssociativeClass'][$class1][$idA] = array(strtolower($assoc->getAttributeNode('name')->value), $idA);
-                $this->nodes['AssociativeClassAttribute'][$idA][$class0] = $class0;
-                $this->nodes['AssociativeClassAttribute'][$idA][$class1] = $class1;
-            }
-        }
+    if ($node->hasChildNodes()) {
+        $this->parse($node);
     }
+}
 
-    private function handleClassPK() {
-        $classNodes = $this->nodes['uml:Class'];
-        foreach ($classNodes as $id => $node) {
-            $n = $node->firstChild->nextSibling;
-            while ($n) {
-                if ($n->nodeType == XML_ELEMENT_NODE) {
-                    if ($n->nodeName == 'ownedAttribute') {
-                        if ($c = $this->getChild($n->firstChild->nextSibling, 'ormDetail')) {
-                            $colId = $c->getAttributeNode('columnModel')->value;
-                            $col = $this->nodes['dbColumn'][$colId];
-                            if ($col->nodeType == XML_ELEMENT_NODE) {
-                                if ($col->getAttributeNode('primaryKey')->value == 'true') {
-                                    $this->nodes['classPK'][$colId] = $n->getAttributeNode('name')->value;
-                                    $this->nodes['classPK'][$colId . '_type'] = $n->getAttributeNode('type');
-                                    $this->nodes['PK'][$id] = array($n->getAttributeNode('name')->value, $col->getAttributeNode('name')->value, $n->getAttributeNode('type'));
-                                }
+private function handleAssociation() {
+    foreach ($this->nodes['uml:Association'] as $idA => $assoc) {
+        $i = 0;
+        $association = array();
+        $a = $assoc->firstChild;
+        while ($a) {
+            if ($a->nodeType == XML_ELEMENT_NODE) {
+                if ($a->nodeName == 'memberEnd') {
+                    $idref = $a->getAttributeNode('xmi:idref')->value;
+                    $property = $this->nodes['uml:Property'][$idref];
+                    $association[$i++] = $property;
+                }
+            }
+            $a = $a->nextSibling;
+        }
+        if ((count($association) == 0) ||
+            !($association[0] instanceof DomElement) || !($association[1] instanceof DomElement)) {
+            $this->errors[] = 'Error at Association ' . $idA;
+    } else {
+        $class0 = $association[0]->getAttributeNode('type')->value;
+        $this->nodes['Associations'][$class0][$idA] = $association;
+        $class1 = $association[1]->getAttributeNode('type')->value;
+        $this->nodes['Associations'][$class1][$idA] = $association;
+    }
+}
+}
+
+private function handleAssociationClass() {
+    foreach ($this->nodes['uml:AssociationClass'] as $idA => $assoc) {
+        $i = 0;
+        $association = $associationExtra = array();
+        $a = $assoc->firstChild;
+        while ($a) {
+            if ($a->nodeType == XML_ELEMENT_NODE) {
+                if ($a->nodeName == 'memberEnd') {
+                    $idref = $a->getAttributeNode('xmi:idref')->value;
+                    $property = $this->nodes['uml:Property'][$idref];
+                    $association[$i] = $property;
+                    $i++;
+                }
+            }
+            $a = $a->nextSibling;
+        }
+        if ((count($association) == 0) ||
+            !($association[0] instanceof DomElement) || !($association[1] instanceof DomElement)) {
+            $this->errors[] = 'Error at Association ' . $idA;
+    } else {
+        $class0 = $association[0]->getAttributeNode('type')->value;
+        $class1 = $association[1]->getAttributeNode('type')->value;
+        $this->nodes['Associations'][$class0][$class1] = $association;
+        $this->nodes['Associations'][$class1][$class0] = $association;
+        $this->nodes['AssociativeClass'][$class0][$idA] = array(strtolower($assoc->getAttributeNode('name')->value), $idA);
+        $this->nodes['AssociativeClass'][$class1][$idA] = array(strtolower($assoc->getAttributeNode('name')->value), $idA);
+        $this->nodes['AssociativeClassAttribute'][$idA][$class0] = $class0;
+        $this->nodes['AssociativeClassAttribute'][$idA][$class1] = $class1;
+    }
+}
+}
+
+private function handleClassPK() {
+    $classNodes = $this->nodes['uml:Class'];
+    foreach ($classNodes as $id => $node) {
+        $n = $node->firstChild->nextSibling;
+        while ($n) {
+            if ($n->nodeType == XML_ELEMENT_NODE) {
+                if ($n->nodeName == 'ownedAttribute') {
+                    if ($c = $this->getChild($n->firstChild->nextSibling, 'ormDetail')) {
+                        $colId = $c->getAttributeNode('columnModel')->value;
+                        $col = $this->nodes['dbColumn'][$colId];
+                        if ($col->nodeType == XML_ELEMENT_NODE) {
+                            if ($col->getAttributeNode('primaryKey')->value == 'true') {
+                                $this->nodes['classPK'][$colId] = $n->getAttributeNode('name')->value;
+                                $this->nodes['classPK'][$colId . '_type'] = $n->getAttributeNode('type');
+                                $this->nodes['PK'][$id] = array($n->getAttributeNode('name')->value, $col->getAttributeNode('name')->value, $n->getAttributeNode('type'));
                             }
                         }
                     }
                 }
-                $n = $n->nextSibling;
             }
+            $n = $n->nextSibling;
         }
     }
+}
 
-    private function handleClassGeneralization() {
-        $classNodes = $this->nodes['uml:Class'];
-        foreach ($classNodes as $id => $node) {
-            $n = $node->firstChild->nextSibling;
-            while ($n) {
-                if ($n->nodeType == XML_ELEMENT_NODE) {
-                    if ($n->nodeName == 'generalization') {
-                        $this->nodes['classGeneralization'][$id] = $n->getAttributeNode('general')->value;
-                        $this->nodes['classEspecialization'][$n->getAttributeNode('general')->value][] = $id;
-                    }
+private function handleClassGeneralization() {
+    $classNodes = $this->nodes['uml:Class'];
+    foreach ($classNodes as $id => $node) {
+        $n = $node->firstChild->nextSibling;
+        while ($n) {
+            if ($n->nodeType == XML_ELEMENT_NODE) {
+                if ($n->nodeName == 'generalization') {
+                    $this->nodes['classGeneralization'][$id] = $n->getAttributeNode('general')->value;
+                    $this->nodes['classEspecialization'][$n->getAttributeNode('general')->value][] = $id;
                 }
-                $n = $n->nextSibling;
             }
+            $n = $n->nextSibling;
         }
-        $classNodes = $this->nodes['uml:Enumeration'];
-        foreach ($classNodes as $id => $node) {
-            $n = $node->firstChild->nextSibling;
-            while ($n) {
-                if ($n->nodeType == XML_ELEMENT_NODE) {
-                    if ($n->nodeName == 'generalization') {
-                        $this->nodes['classGeneralization'][$id] = $n->getAttributeNode('general')->value;
+    }
+    $classNodes = $this->nodes['uml:Enumeration'];
+    foreach ($classNodes as $id => $node) {
+        $n = $node->firstChild->nextSibling;
+        while ($n) {
+            if ($n->nodeType == XML_ELEMENT_NODE) {
+                if ($n->nodeName == 'generalization') {
+                    $this->nodes['classGeneralization'][$id] = $n->getAttributeNode('general')->value;
                         //$this->nodes['classEspecialization'][$n->getAttributeNode('general')->value][] = $id;
+                }
+            }
+            $n = $n->nextSibling;
+        }
+    }
+}
+
+private function handleClassComment() {
+    $classNodes = $this->nodes['uml:Class'];
+    foreach ($classNodes as $id => $node) {
+        $n = $node->firstChild->nextSibling;
+        while ($n) {
+            if ($n->nodeType == XML_ELEMENT_NODE) {
+                if ($n->nodeName == 'ownedComment') {
+                    if ($c = $this->getChild($n, 'body')) {
+                        $this->nodes['classComment'][$id] = str_replace("\n", "\n * ", $c->nodeValue);
                     }
                 }
-                $n = $n->nextSibling;
             }
+            $n = $n->nextSibling;
         }
     }
+}
 
-    private function handleClassComment() {
-        $classNodes = $this->nodes['uml:Class'];
-        foreach ($classNodes as $id => $node) {
-            $n = $node->firstChild->nextSibling;
-            while ($n) {
-                if ($n->nodeType == XML_ELEMENT_NODE) {
-                    if ($n->nodeName == 'ownedComment') {
-                        if ($c = $this->getChild($n, 'body')) {
-                            $this->nodes['classComment'][$id] = str_replace("\n", "\n * ", $c->nodeValue);
-                        }
-                    }
-                }
-                $n = $n->nextSibling;
-            }
-        }
+private function handleClassModule() {
+    $classNodes = $this->nodes['uml:Class'];
+    foreach ($classNodes as $id => $node) {
+        $package = $node->parentNode->getAttributeNode('name')->value;
+        $moduleName = strtolower(str_replace('_Classes', '', $package));
+        $this->nodes['classModule'][$id] = $moduleName;
     }
-
-    private function handleClassModule() {
-        $classNodes = $this->nodes['uml:Class'];
-        foreach ($classNodes as $id => $node) {
-            $package = $node->parentNode->getAttributeNode('name')->value;
-            $moduleName = strtolower(str_replace('_Classes', '', $package));
-            $this->nodes['classModule'][$id] = $moduleName;
-        }
-        $classNodes = $this->nodes['uml:Enumeration'];
-        foreach ($classNodes as $id => $node) {
-            $package = $node->parentNode->getAttributeNode('name')->value;
-            $moduleName = strtolower(str_replace('_Classes', '', $package));
-            $this->nodes['classModule'][$id] = $moduleName;
-        }
+    $classNodes = $this->nodes['uml:Enumeration'];
+    foreach ($classNodes as $id => $node) {
+        $package = $node->parentNode->getAttributeNode('name')->value;
+        $moduleName = strtolower(str_replace('_Classes', '', $package));
+        $this->nodes['classModule'][$id] = $moduleName;
     }
+}
 
-    function handleClass($elements) {
-        $tab = '    ';
-        $classNodes = $elements;
-        $dbName = $this->databaseName;
-        $moduleName = $this->moduleName;
-        $document = array();
+function handleClass($elements) {
+    $tab = '    ';
+    $classNodes = $elements;
+    $dbName = $this->databaseName;
+    $moduleName = $this->moduleName;
+    $document = array();
 
-        $document[] = "[globals]";
-        $document[] = "database = \"{$dbName}\"";
-        $document[] = "app = \"{$this->appName}\"";
-        $document[] = "module = \"{$this->moduleName}\"";
-        $document[] = '';
+    $document[] = "[globals]";
+    $document[] = "database = \"{$dbName}\"";
+    $document[] = "app = \"{$this->appName}\"";
+    $document[] = "module = \"{$this->moduleName}\"";
+    $document[] = '';
 
-        foreach ($classNodes as $node) {
-            $properties = $methods = '';
-            $id = $node->getAttributeNode('xmi:id')->value;
+    foreach ($classNodes as $node) {
+        $properties = $methods = '';
+        $id = $node->getAttributeNode('xmi:id')->value;
             //$this->moduleName = $moduleName = $this->nodes['classModule'][$id];
-            $classNameXMI = $node->getAttributeNode('name')->value;
-            $this->className = $className = strtolower($classNameXMI);
-            
-            if ($className == 'menumdatabase') {
-                continue;
-            }
-            
-            mdump('handleClass = ' . $classNameXMI);
+        $classNameXMI = $node->getAttributeNode('name')->value;
+        $this->className = $className = strtolower($classNameXMI);
 
-            $docassoc = $docattr = $attributes = array();
-            $document[] = '[' . $classNameXMI . ']';
-            if ($t = $this->getChild($node->firstChild->nextSibling, 'ormDetail')) {
-                $tableId = $t->getAttributeNode('tableModel')->value;
-                $table = $this->nodes['dbTable'][$tableId];
-                if ($table->nodeType == XML_ELEMENT_NODE) {
-                    $tableName = $table->getAttributeNode('name')->value;
-                    $document[] = "table = \"{$tableName}\"";
+        if ($className == 'menumdatabase') {
+            continue;
+        }
+
+        mdump('handleClass = ' . $classNameXMI);
+
+        $docassoc = $docattr = $attributes = array();
+        $document[] = '[' . $classNameXMI . ']';
+        if ($t = $this->getChild($node->firstChild->nextSibling, 'ormDetail')) {
+            $tableId = $t->getAttributeNode('tableModel')->value;
+            $table = $this->nodes['dbTable'][$tableId];
+            if ($table->nodeType == XML_ELEMENT_NODE) {
+                $tableName = $table->getAttributeNode('name')->value;
+                $document[] = "table = \"{$tableName}\"";
+            }
+        }
+
+        $extends = '';
+        if ($generalization = $this->nodes['classGeneralization'][$id]) {
+            $moduleSuperClass = $this->nodes['classModule'][$generalization];
+            if ($node->getAttributeNode('xmi:type')->value != 'uml:Enumeration') {
+                $superClass = $this->nodes['uml:Class'][$generalization];
+                $extends = "\\" . $moduleSuperClass . "\models\\" . $superClass->getAttributeNode('name')->value;
+                $document[] = "extends = \"{$extends}\"";
+                $reference = $this->getChild($node->firstChild->nextSibling, 'ormDetail');
+                if ($reference) {
+                    $key = $this->nodes['PK'][$generalization];
+                    $columnType = $this->getType($key[2]);
+                    $docattr[] = "attributes['{$key[0]}'] = \"{$key[1]},{$columnType},not null,reference\"";
                 }
-            }
-
-            $extends = '';
-            if ($generalization = $this->nodes['classGeneralization'][$id]) {
-                $moduleSuperClass = $this->nodes['classModule'][$generalization];
-                if ($node->getAttributeNode('xmi:type')->value != 'uml:Enumeration') {
-                    $superClass = $this->nodes['uml:Class'][$generalization];
-                    $extends = "\\" . $moduleSuperClass . "\models\\" . $superClass->getAttributeNode('name')->value;
-                    $document[] = "extends = \"{$extends}\"";
-                    $reference = $this->getChild($node->firstChild->nextSibling, 'ormDetail');
-                    if ($reference) {
-                        $key = $this->nodes['PK'][$generalization];
-                        $columnType = $this->getType($key[2]);
-                        $docattr[] = "attributes['{$key[0]}'] = \"{$key[1]},{$columnType},not null,reference\"";
-                    }
-                } else {
-                    $superClass = $this->nodes['uml:Enumeration'][$generalization];
-                    if ($superClass->getAttributeNode('name')->value != 'MEnumDatabase') {
-                        $extends = "\\" . $moduleSuperClass . "\models\\" . $superClass->getAttributeNode('name')->value;
-                    } else {
-                        $extends = "\\" . $superClass->getAttributeNode('name')->value;
-                    }
-                    $document[] = "extends = \"{$extends}\"";
-                }
-            }
-
-            $comment = $this->nodes['classComment'][$id];
-
-            $noGenerator = $this->hasChild($node->firstChild->nextSibling, 'appliedStereotype', "Class_ORM No Generator_id");
-            $idIdentity = $this->hasChild($node->firstChild->nextSibling, 'appliedStereotype', "Class_ORM ID Identity_id");
-            $getterSetter = '';
-            $pk = '';
-            if ($node->getAttributeNode('xmi:type')->value == 'uml:Enumeration') {
-                $document[] = "type = \"enumeration\"";
             } else {
-                $document[] = "log = \"\"";
-                $document[] = "description = \"\"";
+                $superClass = $this->nodes['uml:Enumeration'][$generalization];
+                if ($superClass->getAttributeNode('name')->value != 'MEnumDatabase') {
+                    $extends = "\\" . $moduleSuperClass . "\models\\" . $superClass->getAttributeNode('name')->value;
+                } else {
+                    $extends = "\\" . $superClass->getAttributeNode('name')->value;
+                }
+                $document[] = "extends = \"{$extends}\"";
             }
-            $n = $node->firstChild->nextSibling;
-            while ($n) {
-                if ($n->nodeType == XML_ELEMENT_NODE) {
-                    if ($n->nodeName == 'ownedAttribute') {
+        }
+
+        $comment = $this->nodes['classComment'][$id];
+
+        $noGenerator = $this->hasChild($node->firstChild->nextSibling, 'appliedStereotype', "Class_ORM No Generator_id");
+        $idIdentity = $this->hasChild($node->firstChild->nextSibling, 'appliedStereotype', "Class_ORM ID Identity_id");
+        $getterSetter = '';
+        $pk = '';
+        if ($node->getAttributeNode('xmi:type')->value == 'uml:Enumeration') {
+            $document[] = "type = \"enumeration\"";
+        } else {
+            $document[] = "log = \"\"";
+            $document[] = "description = \"\"";
+        }
+        $n = $node->firstChild->nextSibling;
+
+        $jsonFormat = false;
+        if (\Manager::getOptions('scriptFormat') == "json")
+            $jsonFormat = true;
+
+        while ($n) {
+            if ($n->nodeType == XML_ELEMENT_NODE) {
+                if ($n->nodeName == 'ownedAttribute') {
                         if ($n->getAttributeNode('association')->value != '') { // e uma associação, não um atributo
                             $n = $n->nextSibling;
                             continue;
@@ -356,7 +361,8 @@ class MWizardXMIScript {
 
                         $at = $n->getAttributeNode('name')->value;
                         $attributes[$at] = $at;
-                        $attribute = "attributes['{$at}'] = \"";
+
+                        $attribute = ($jsonFormat? "attributes['{$at}'] = '{": "attributes['{$at}'] = \"");
 
                         if ($cmt = $this->getChild($n, 'ownedComment')) {
                             $c = $this->getChild($cmt, 'body');
@@ -368,33 +374,37 @@ class MWizardXMIScript {
                             $col = $this->nodes['dbColumn'][$colId];
                             if ($col->nodeType == XML_ELEMENT_NODE) {
                                 $colName = $col->getAttributeNode('name')->value;
-                                $attribute .= "{$colName}";
+                                $attribute .= ($jsonFormat ? "\"colName\":\"{$colName}\"" :  "{$colName}");
                             }
                         }
 
                         $columnType = $this->getType($n->getAttributeNode('type'));
-                        $attribute .= ",{$columnType}";
+                        $attribute .= ($jsonFormat ? ",\"colType\":\"{$columnType}\"" :  ",{$columnType}");
 
                         $isPK = false;
                         if ($c = $this->getChild($n->firstChild->nextSibling, 'appliedStereotype')) {
                             if ($c->getAttributeNode('xmi:value')->value == 'Attribute_PK_id') {
-                                $attribute .= ",not null,primary";
+
+                                 $attribute .= ($jsonFormat ? ",\"notnull\":\"true\",\"primary\":\"true\"" :  ",not null,primary");
+                                //$attribute .= ",not null,primary";
+                                
                                 $isPK = true;
                                 $pk = $at;
                                 if (!$noGenerator) {
                                     if ($idIdentity) {
-                                        $attribute .= ",identity";
+                                        $attribute .= ($jsonFormat ? ",\"identity\":\"true\"" :  ",identity");
                                     } else {
-                                        $attribute .= ",seq_{$tableName}";
+                                         $attribute .= ($jsonFormat ? ",\"sequence\":\"seq_{$tableName}\"" :  ",seq_{$tableName}");
                                     }
                                 }
                             }
                         }
 
-                        $docattr[] = $attribute . "\"";
-                    } else if ($n->nodeName == 'ownedLiteral') {
+                        $docattr[] = $attribute . ($jsonFormat?"}'":"\"");
+
+                    } else if ($n->nodeName == 'ownedLiteral') { 
                         $at = $n->getAttributeNode('name')->value;
-                        mdump($at);
+                        //mdump($at);
                         $attributes[$at] = $at;
                         $c = $n->firstChild->nextSibling;
                         if ($c->nodeType == XML_ELEMENT_NODE) {
@@ -430,7 +440,11 @@ class MWizardXMIScript {
                         $docassoc[] = $this->createAssociationNode($association[1], $association[0], $attribute, $params);
 
                         if (($attribute != '') && (!$attributes[$attribute[0]])) {
+                            if ($jsonFormat)
+                            $docattr[] = "attributes['{$attribute[0]}'] = '{\"colName\":\"{$attribute[0]}\",\"colType\":\"{$attribute[2]}\",\"foreign\":\"true\"}'";
+                                else
                             $docattr[] = "attributes['{$attribute[0]}'] = \"{$attribute[0]},{$attribute[2]},,foreign\"";
+
                             $attributes[$attribute[0]] = $attribute[0];
                         }
                     }
@@ -438,9 +452,13 @@ class MWizardXMIScript {
                         $docassoc[] = $this->createAssociationNode($association[0], $association[1], $attribute, $params);
 
                         if (($attribute != '') && (!$attributes[$attribute[0]])) {
+                            if ($jsonFormat)
+                                $docattr[] = "attributes['{$attribute[0]}'] = '{\"colName\":\"{$attribute[0]}\",\"coltype\":\"{$attribute[2]}\",\"foreign\":\"true\"}'";
+                           else
                             $docattr[] = "attributes['{$attribute[0]}'] = \"{$attribute[0]},{$attribute[2]},,foreign\"";
-                            $attributes[$attribute[0]] = $attribute[0];
-                        }
+
+                        $attributes[$attribute[0]] = $attribute[0];
+                    }
                     }
                 }
             }
@@ -449,6 +467,10 @@ class MWizardXMIScript {
                 foreach ($this->nodes['AssociativeClass'][$id] as $idA => $association) {
                     $toClass = $association[0];
                     $module = $this->nodes['classModule'][$id];
+                    if ($jsonFormat)
+                    $docattr[] = "associations['{$toClass}s'] = '{\"toClass\":\"{$module}\models\\{$toClass}\",\"cardinality\":\"oneToMany\",\"fieldKey\":\"{$pk}:{$pk}\"}'";
+
+                        else
                     $docattr[] = "associations['{$toClass}s'] = \"{$module}\models\\{$toClass},oneToMany,{$pk}:{$pk}\"";
                 }
             }
@@ -458,7 +480,11 @@ class MWizardXMIScript {
                     $atName = $this->nodes['PK'][$associatedClass][0];
                     $atCol = $this->nodes['PK'][$associatedClass][0];
                     $atType = $this->nodes['PK'][$associatedClass][0];
-                    $docattr[] = "attributes['{$atName}'] = \"{$atCol},integer,,foreign\"";
+
+                    if ($jsonFormat)
+                        $docattr[] = "attributes['{$atName}'] = '{\"colName\":\"{$atCol}\",\"colType\":\"integer\",\"foreign\":\"true\"}'";
+                    else
+                        $docattr[] = "attributes['{$atName}'] = \"{$atCol},integer,,foreign\"";
                 }
             }
 
@@ -469,7 +495,11 @@ class MWizardXMIScript {
                     $subClassName = lcfirst($subClass->getAttributeNode('name')->value);
                     $subClassNameFull = "\\" . $moduleSubClass . "\models\\" . $subClassName;
                     $key = $this->nodes['PK'][$id];
-                    $docassoc[] = "associations['{$subClassName}'] = \"{$subClassNameFull},oneToOne,{$key[0]}:{$key[1]}\"";
+
+                    if ($jsonFormat)
+                        $docassoc[] = "associations['{$subClassName}'] = '{\"toClass\":\"{$subClassNameFull}\",\"cardinality\":\"oneToOne\",\"fieldKey\":\"{$key[0]}:{$key[1]}\"}'";
+                        else
+                            $docassoc[] = "associations['{$subClassName}'] = \"{$subClassNameFull},oneToOne,{$key[0]}:{$key[1]}\"";
                 }
             }
 
@@ -506,11 +536,15 @@ class MWizardXMIScript {
       }
      */
 
-    private function createAssociationNode($association, $myself, &$attribute, &$params) {
+      private function createAssociationNode($association, $myself, &$attribute, &$params) {
         $tab = '    ';
         $target = trim($association->getAttributeNode('name')->value);
 
-        $at = "associations['{$target}'] = \"";
+        $jsonFormat = false;
+        if (\Manager::getOptions('scriptFormat') == "json")
+            $jsonFormat = true;
+
+        $at = ($jsonFormat?"associations['{$target}'] = '{":"associations['{$target}'] = \"");
 
         $autoAssociation = false;
         $to = $this->nodes['uml:Class'][$association->getAttributeNode('type')->value];
@@ -521,7 +555,11 @@ class MWizardXMIScript {
             $fromClass = strtolower($from->getAttributeNode('name')->value);
             $autoAssociation = ($toClass == $fromClass);
         }
-        $at .= "{$module}\models\\{$toClass}";
+
+        if ($jsonFormat)
+            $at .= "\"toClass\":\"{$module}\models\\{$toClass}\"";
+        else            
+            $at .= "{$module}\models\\{$toClass}";
 
         $c0 = $c1 = '';
         $lower = $this->getChild($association, 'lowerValue');
@@ -549,7 +587,7 @@ class MWizardXMIScript {
         }
         $params['cardinality'] = $cardinality;
 
-        $at .= ",{$cardinality}";
+        $at .= ($jsonFormat?",\"cardinality\":\"{$cardinality}\"":",{$cardinality}");
 
         $deleteAutomatic = $saveAutomatic = $retrieveAutomatic = false;
 
@@ -609,7 +647,7 @@ class MWizardXMIScript {
             }
         }
 
-        if ($cardinality == 'manyToMany') {
+        if ($cardinality == 'manyToMany') { 
             $a = $association;
             $id = $a->getAttributeNode('xmi:id')->value;
             $relNode = $this->nodes['dbForeignKey'][$id];
@@ -620,13 +658,14 @@ class MWizardXMIScript {
             $tableId = $relNode->getAttributeNode('to')->value;
             $tableNode = $this->nodes['dbTable'][$tableId];
             $tableName = $tableNode->getAttributeNode('name')->value;
-            $at .= ",{$tableName}\"";
+
+            $at .= ($jsonFormat?",\"tableName\":\"{$tableName}\"}'":",{$tableName}\"");
 
             $keyName1 = $myself->getAttributeNode('name')->value;
             $keyName2 = $association->getAttributeNode('name')->value;
         } else {
             if ($createFK) {
-                $at .= ",{$fkName}:{$pkName}\"";
+                $at .= ($jsonFormat?",\"relation\":\"{$fkName}:{$pkName}\"}'":",{$fkName}:{$pkName}\"");
                 $attribute = array($fkName, $pkName, $refType);
                 if ($fkName == '') {
                     $this->errors[] = $fromClass . ' - ' . $toClass . ': Chave FK nula';
@@ -641,7 +680,7 @@ class MWizardXMIScript {
                 if ($pkName == '') {
                     $this->errors[] = $fromClass . ' - ' . $toClass . ': Chaves PK nula';
                 }
-                $at .= ",{$pkName}:{$fkName}\"";
+                $at .= ($jsonFormat?",\"relation\":\"{$pkName}:{$fkName}\"}'":",{$pkName}:{$fkName}\"");
             }
         }
         return $at;

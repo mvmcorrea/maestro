@@ -19,10 +19,10 @@ class MainController extends MController {
         $moduleName = $this->data->module;
         $databaseName = $this->data->database;
         $package = $this->data->package;
-        $fileXMI = Manager::getAppPath('public/files/xmi/') . $fileName;
+        $baseDir = Manager::getOptions('basePath');
+        $fileXMI =  $baseDir . $fileName;
 
         $xmi = new MWizardORM();
-        $baseDir = Manager::getOptions('basePath');
         $xmi->setBaseDir($baseDir);
         $xmi->setFile($fileXMI);
         $xmi->setModuleName($moduleName);
@@ -50,6 +50,9 @@ class MainController extends MController {
         
         //$fileXMI = Manager::getAppPath('public/files/xmi/') . $fileName;
         $fileXMI = Manager::getOptions('basePath') . $fileName;
+
+        if (is_dir($fileXMI))
+            $fileXMI .= ".xmi";
 
         if (!file_exists($fileXMI)) {
             $fileXMI.=".xmi";
@@ -84,12 +87,17 @@ class MainController extends MController {
         //$fileScript = Manager::getAppPath('public/files/scripts/') . $fileName;
         $fileScript = Manager::getOptions('basePath') . $fileName;
 
+        if (is_dir($fileScript))
+            $fileScript .= ".txt";
+
         if (!file_exists($fileScript)) {
             $fileScript.=".txt";
             if (!file_exists($fileScript)) {
                 throw new Exception("Arquivo Script inexistente");
             }
         }
+
+        $fileNameSemTxt = str_replace(".txt","",$fileName);
 
         $script = new MWizardScript();
         $baseDir = Manager::getOptions('basePath');

@@ -19,6 +19,10 @@ class MWizardScript {
         $this->fileScript = $file;
     }
 
+    public function isJsonFormat(){
+        return (\Manager::getOptions('scriptFormat') == "json");
+    }
+
     public function generate() {
         $this->errors = array();
         $this->ini = parse_ini_file($this->fileScript, true);
@@ -28,13 +32,14 @@ class MWizardScript {
         $moduleName = $this->ini['globals']['module'] ? : $appName;
         $actions[] = $tab . "'{$moduleName}' => array('{$moduleName}', '{$moduleName}/main/main', '{$moduleName}IconForm', '', A_ACCESS, array(";
 
+
         foreach ($this->ini as $className => $node) {
             $originalClassName = $className;
             $className = strtolower($className);
             if ($className == 'globals')
                 continue;
             $properties = $methods = $validators = '';
-            mdump('handleClass = ' . $className);
+            //mdump('handleClass = ' . $className);
             $extends = $node['extends'];
             $log = $node['log'];
 
@@ -107,15 +112,36 @@ class MWizardScript {
             $pk = '';
             $getterSetter = "\n\n    /**\n     * Getters/Setters\n     */";
             $attributes = $node['attributes'];
+
             foreach ($attributes as $attributeName => $attributeData) {
                 $isPK = false;
-                $at = explode(',', $attributeData);
-                // atData:
-                // 0 - column
-                // 1 - type
-                // 2 - null or not null
-                // 3 - key type
-                // 4 - generator
+
+                $at = array();
+                
+                if ($this->isJsonFormat()){
+
+                    $jsonAttributeData = \MJSON::decode($attributeData);
+                    
+                    $at = array();
+                    $at[] = $jsonAttributeData['colName'];
+                    $at[] = $jsonAttributeData['colType'];
+                    $at[] = ($jsonAttributeData['notnull']?"not null":"");
+                    $at[] = ($jsonAttributeData['primary']?"primary":"");
+                    $at[] =  $jsonAttributeData['sequence'];
+
+               
+                }else{
+                    $at = explode(',', $attributeData);
+                    // atData:
+                    // 0 - column
+                    // 1 - type
+                    // 2 - null or not null
+                    // 3 - key type
+                    // 4 - generator
+                }
+
+
+                
                 $attribute = $tab . $tab . $tab . "'{$attributeName}' => array(";
                 $attribute .= "'column' => '{$at[0]}'";
                 if ($at[3]) {
@@ -184,7 +210,21 @@ class MWizardScript {
             $associations = $node['associations'];
             if (is_array($associations)) {
                 foreach ($associations as $associationName => $associationData) {
-                    $assoc = explode(',', $associationData);
+                    
+                    $assoc = null;
+                    if ($this->isJsonFormat()){
+
+                        $jsonAssociationData = json_decode($associationData);
+                        $assoc = array();
+                        $assoc[0]=$jsonAssociationData['toClass'];
+                        $assoc[1]=$jsonAssociationData['cardinality'];
+                        $assoc[2]=$jsonAssociationData['relation']||$jsonAssociationData['tableName'];
+
+                    }else{
+                         $assoc = explode(',', $associationData);
+                    }
+
+                   
                     // assoc:
                     // 0 - toClass
                     // 1 - cardinality
