@@ -21,7 +21,9 @@
  * Complete Class Description.
  */
 class MController {
-
+    /** @var \common\Models\Log**/
+    private $logger;
+    
     protected $name;
     protected $application;
     protected $module;
@@ -131,6 +133,10 @@ class MController {
 
     public function setData() {
         $this->data = Manager::getData();
+    }
+
+    public function setDataObject($data) {
+        $this->data = $data;
     }
 
     public function getData() {
@@ -300,5 +306,21 @@ class MController {
         $output = Manager::getPage()->generate();
         $this->flush($output);
     }
+    
+    protected function log($message, $operation = 'security') {
+        if ($this->logger === null) {
+            $this->logger = new \common\Models\Log();
+        }
+        
+        $idUser = \Manager::getLogin() ? \Manager::getLogin()->getIdUser() : 0;
+        
+        $message .= ' - Remote IP: ' . $_SERVER['REMOTE_ADDR'];
+        
+        $this->logger->log($operation, 
+                     get_class($this), 
+                     0, 
+                     $message,
+                     $idUser);
+    } 
 
 }
