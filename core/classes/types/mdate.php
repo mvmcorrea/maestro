@@ -134,6 +134,10 @@ class MDate extends MType {
         return $this->datetime;
     }
 
+    public function getValue() {
+        return $this->datetime;
+    }
+    
     public function copy() {
         return clone $this;
     }
