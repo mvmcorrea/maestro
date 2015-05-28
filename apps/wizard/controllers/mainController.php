@@ -57,7 +57,7 @@ class MainController extends MController {
         if (!file_exists($fileXMI)) {
             $fileXMI.=".xmi";
             if (!file_exists($fileXMI)) {
-                throw new Exception("Arquivo XMI inexistente em public/files/xmi/");
+                throw new Exception("Arquivo XMI inexistente: {$fileXMI}");
             }
         }
 
