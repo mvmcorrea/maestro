@@ -154,6 +154,13 @@ abstract class MComponent {
         return $service;
     }
 
+     /**
+    * Retorna um UniqueID muito mais difícil de repetir
+    */
+    public function getBetterUniqueID(){
+        return md5(uniqid(rand(), true));
+    }
+
 }
 
 ?>
